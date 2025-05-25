@@ -1,0 +1,17 @@
+.login {
+    padding: 20px;
+    margin: auto;
+    min-Height: 80vh;
+    color: whitesmoke;
+}
+
+.login button{
+    background-color: whitesmoke;
+    border: none;
+    color:#50262d;
+    font-size: medium;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 1%;
+    margin: 3%;
+}

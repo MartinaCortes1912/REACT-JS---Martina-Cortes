@@ -1,0 +1,55 @@
+.detalle-container {
+    display: flex;
+    gap: 30px;
+    padding: 8%;
+    background-color: #50262d;
+    color: whitesmoke;
+    margin: 5% auto;
+    max-width: 800px;
+    align-items: center;
+}
+  
+.detalle-imagen {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+}
+  
+.detalle-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+  
+.detalle-contador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2%;
+}
+
+.detalle-contador button {
+   background-color: #a75865;
+   border: none;
+   color: whitesmoke;
+   font-size: medium;
+   cursor: pointer; 
+   width: 10%;
+}
+  
+.detalle-contador span {
+    font-size: 18px;
+}
+
+.detalle-btn{
+    background-color: whitesmoke;
+    border: none;
+    color: #50262d;
+    font-size: medium;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 2%;
+}
+  
