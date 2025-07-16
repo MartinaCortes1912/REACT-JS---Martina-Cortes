@@ -2,9 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useContext } from "react";
 import { CarritoContext} from "../contexts/CarritoContext";
+import { useAuthContext } from "../contexts/AuthContext";
 
 function Nav() {  
     const {productosCarrito} = useContext(CarritoContext)
+    const{user} = useAuthContext();
+
     return (  
         <nav style={{ backgroundColor: "#a75865", color: "white", padding: "10px" }}>  
             <ul style={{ listStyle: "none", display: "flex", justifyContent: "space-around", margin: 0 }}>  
@@ -13,8 +16,9 @@ function Nav() {
                 <li><Link to="/nosotros" style={{ color: "white", textDecoration: "none" }}>Nosotros</Link></li>  
                 <li><Link to="/contacto" style={{ color: "white", textDecoration: "none" }}>Contacto</Link></li> 
                 <li><Link to="/carrito" style={{ color: "white", textDecoration: "none" }}>Carrito <span>{productosCarrito.length > 0 ? productosCarrito.length : ""}</span></Link></li> 
-                <li><Link to="/admin" style={{ color: "white", textDecoration: "none" }}>Admin</Link></li> 
-                <li><Link to="/login" style={{ color: "white", textDecoration: "none" }}>Login</Link></li>  
+                {user ? <li><Link to="/admin" style={{ color: "white", textDecoration: "none" }}>Admin</Link></li> : <> </>}
+                <li><Link to="/login" style={{ color: "white", textDecoration: "none" }}>Login</Link></li> 
+                <li><Link to="/admin/productos" style={{ color: "white", textDecoration: "none" }}>Productos</Link></li> 
             </ul>  
         </nav>  
     );  

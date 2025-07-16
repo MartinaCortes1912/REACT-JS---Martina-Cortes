@@ -4,7 +4,7 @@ import CarritoCard from "./CarritoCard.jsx";
 import { Navigate } from "react-router-dom";
 import { CarritoContext } from "../contexts/CarritoContext.jsx";
 
-export default function Carrito({usuarioLogeado}) {
+export default function Carrito() {
     const {productosCarrito, vaciarCarrito, borrarProductoCarrito} = useContext(CarritoContext);
     console.log("Productos: " + productosCarrito)
 

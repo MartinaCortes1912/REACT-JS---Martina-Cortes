@@ -1,4 +1,3 @@
-
 import './App.css'
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -10,24 +9,16 @@ import ProductosContainer from './components/Productos';
 import ProductoDetalle from './components/ProductoDetalle'
 import Nosotros from './components/Nosotros'
 import Contacto from './components/Contacto' 
-import Admin from './components/Admin';   
-import Login from './components/Login';
+import Admin from './components/Admin'; 
 import Carrito from './components/Carrito';
-import { CarritoProvider } from './contexts/CarritoContext';
+import Login from './components/Login.jsx';
+import { useAuthContext } from './contexts/AuthContext.jsx';
+import FormularioProducto from './components/FormularioProducto.jsx';
 
 function App() {
-  const [usuarioLogeado, setUsuarioLogeado] = useState(false)
-  const [adminLogeado, setAdminLogeado] = useState(false)
+  const{user} = useAuthContext();
 
-  function manejarAdmin() {
-    setAdminLogeado(!adminLogeado)
-  }
-
-  function manejarUser(){
-    setUsuarioLogeado(!usuarioLogeado)
-  }
   return (
-    <CarritoProvider>
       <Router>
         <div>
           <Header/>
@@ -38,14 +29,14 @@ function App() {
             <Route path="/productos/:id" element={<ProductoDetalle/>} />
             <Route path="/nosotros" element={<Nosotros />} />
             <Route path="/contacto" element={<Contacto/>} />
-            <Route path="/carrito" element={usuarioLogeado ? <Carrito/> : <Navigate to={"/login"} replace/>}/>   
-            <Route path='/admin' element={adminLogeado ? <Admin/> : <Navigate to={"/login"} replace/>} />
-            <Route path="/login" element={<Login user={usuarioLogeado} admin={adminLogeado} setLogeadoAdmin={manejarAdmin} setLogeadoUser={manejarUser}/>}/>  
+            <Route path="/carrito" element={user ? <Carrito/> : <Navigate to={"/login"} replace/>}/>   
+            <Route path='/admin' element={user ? <Admin/> : <Navigate to={"/login"} replace/>} />
+            <Route path='/admin/productos' element={<FormularioProducto/>} />
+            <Route path="/login" element={<Login/>} />
           </Routes>
           <Footer/>
         </div>
       </Router>
-    </CarritoProvider>
   )
 }
 
