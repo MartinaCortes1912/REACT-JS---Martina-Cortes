@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
-import "../styles/ProductoDetalle.css";
 import { dispararSweetBasico } from "../assets/SweetAlert";
 import { CarritoContext } from "../contexts/CarritoContext";
 import { useAuthContext } from "../contexts/AuthContext";

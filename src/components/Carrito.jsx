@@ -1,4 +1,3 @@
-import "../styles/Carrito.css"
 import { useContext, useEffect, useState } from "react";
 import CarritoCard from "./CarritoCard.jsx";
 import { Navigate } from "react-router-dom";

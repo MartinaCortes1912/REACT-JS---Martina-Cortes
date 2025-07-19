@@ -1,5 +1,3 @@
-import "../styles/Productos.css"
-
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { useProductosContext } from "../contexts/ProductosContext"
@@ -29,6 +27,7 @@ function ProductosContainer(){
                 <meta name="description" content="Explora nuestra variedad de productos." />
                 </Helmet>
                 {user ? <Link to="/admin/productos" style={{ color: "white", textDecoration: "none" }}>Productos</Link> : null}
+                <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 {productos.map((producto) => (
                     <div className="producto-card" >
                     <h2 className="producto-titulo">{producto.name}</h2>
@@ -37,6 +36,7 @@ function ProductosContainer(){
                     <Link to={"/productos/" + producto.id} ><button className="producto-btn">Ver más</button></Link>
                 </div>
                 ))}
+                </div>
             </div>
         )
     }

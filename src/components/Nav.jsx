@@ -10,13 +10,14 @@ function Nav() {
     const{user} = useAuthContext();
 
     return (  
-        <nav style={{ backgroundColor: "#a75865", color: "white", padding: "10px" }}>  
-            <ul style={{ listStyle: "none", display: "flex", justifyContent: "space-around", margin: 0 }}>  
-                {user ? <li><Link to="/admin" style={{ color: "white", textDecoration: "none" }}>¡Hola Admin!</Link></li> : <li><Link to="/login" style={{ color: "white", textDecoration: "none" }}>¡Iniciá Sesión!</Link></li>}
-                <li><Link to="/productos" style={{ color: "white", textDecoration: "none", fontWeight: "bold"}}>Productos</Link></li>   
-                <li><Link to="/nosotros" style={{ color: "white", textDecoration: "none", fontWeight: "bold" }}>Nosotros</Link></li>  
-                <li><Link to="/contacto" style={{ color: "white", textDecoration: "none", fontWeight: "bold" }}>Contacto</Link></li> 
-                <li><Link to="/carrito" style={{ color: "white", textDecoration: "none", fontWeight: "bold" }}><IoBag /><span>{productosCarrito.length > 0 ? productosCarrito.length : ""}</span></Link></li> 
+        <nav>  
+            <ul>  
+                {user ? <li><Link to="/admin" style={{ fontWeight: "normal" }}>¡Hola Admin!</Link></li> : <li><Link to="/login" style={{ fontWeight: "normal" }}>¡Inicia Sesión!</Link></li>}
+                <li><Link to="/">Inicio</Link></li>
+                <li><Link to="/productos">Productos</Link></li>   
+                <li><Link to="/nosotros">Nosotros</Link></li>  
+                <li><Link to="/contacto">Contacto</Link></li> 
+                <li><Link to="/carrito"><IoBag /><span>{productosCarrito.length > 0 ? productosCarrito.length : ""}</span></Link></li> 
             </ul>  
         </nav>  
     );  

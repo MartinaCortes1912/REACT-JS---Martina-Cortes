@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 function Header() {  
     return (  
-        <header style={{ padding: "1%", textAlign: "center", color: "white" }}>  
-            <Link to="/" style={{ color: "white", textDecoration: "none" }}>Marruca</Link>  
+        <header style={{ }}>  
+            <Link to="/">Marruca</Link>  
         </header>  
     );  
 }

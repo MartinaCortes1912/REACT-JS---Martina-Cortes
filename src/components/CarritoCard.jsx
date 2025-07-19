@@ -1,5 +1,3 @@
-import "../styles/Carrito.css"
-
 function CarritoCard({producto, funcionDisparadora}){
     
     function borrarDelCarrito() {
