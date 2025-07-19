@@ -37,10 +37,10 @@ export default function Carrito() {
                     funcionDisparadora={funcionDisparadora}
                 />
             ))}
-            {total > 0 ? <h2 class="carrito-total" >Total a pagar: {total.toFixed(2)} $</h2>: <></>}
-            <button class="boton-vaciar" onClick={funcionDisparadora2}>Vaciar carrito</button>
+            {total > 0 ? <h2 class="carrito-total">Total a pagar: {total.toFixed(2)} $</h2>: <></>}
+            <button class="boton-vaciar" onClick={funcionDisparadora2} aria-label="Vaciar carrito">Vaciar carrito</button>
             </>
-            : <p className="carrito-vacio">Carrito vacio</p>}
+            : <p className="carrito-vacio">¡Nooo! Tu carrito está vacío</p>}
         </div>
     )
 }

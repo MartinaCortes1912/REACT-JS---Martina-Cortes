@@ -16,7 +16,7 @@ function CarritoCard({producto, funcionDisparadora}){
             <div className="carrito-sub">
                 <span>$ {producto.cantidad * producto.price}</span>
             </div>
-            <button className="boton-carrito" onClick={borrarDelCarrito}>X</button>
+            <button className="boton-carrito" onClick={borrarDelCarrito} aria-label="Borrar del carrito">X</button>
         </div>
     )
 }

@@ -7,7 +7,8 @@
 .titulo{
   font-size: 2rem;
   font-weight: bold;
-  padding: 8% 0%;
+  padding-top: 8%;
+  padding-bottom: 1%;
 }
 
 /*HEADER*/
@@ -57,18 +58,44 @@ footer{
   padding: 20px;
   margin: auto;
   min-Height: 80vh;
-  color: whitesmoke;
+  max-width: 60vw;
+  color: #552626;
+}
+
+.login label {
+  font-weight: bold;
+}
+
+.login input{
+  width: 100%;
+  padding: 1%;
+  margin-bottom: 3%;
 }
 
 .login button{
-  background-color: whitesmoke;
+  background-color: #552626;
   border: none;
-  color:#50262d;
+  color:white;
   font-size: medium;
   font-weight: bold;
   cursor: pointer;
   padding: 1%;
-  margin: 3%;
+  width: 100%;
+  margin-top: 5%;
+  margin-bottom: 1%;
+}
+
+.login a{
+  text-decoration: none;
+  color: #552626;
+  font-weight: bold;
+}
+
+.login-usuarios{
+  font-size: 80%;
+  margin-top: 5%;
+  background-color: grey;
+  color: white;
 }
 
 /*PRODUCTOS*/
@@ -78,55 +105,59 @@ footer{
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 3%;
+  margin: auto 5%;
 }
 
 .producto-card{
   height: 100%;
-  padding: 1rem;
-  background-color: #a75865;
-  width: 30%;
-  min-height: 28rem;
+  padding-top: 1.5rem;
+  background-color: wheat;
+  color: #552626;
   text-align: center;
-  margin-top: 5%;
 }
 
-.producto-titulo {
-  min-height: 5rem;
+.producto-titulo{
+  padding-top: 5%;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .producto-image{
-  width: 14rem;
-  height: 14rem;
-}
+  width: 100%;}
 
 .producto-btn {
-  background-color: #50262d;
+  background-color: rgb(202, 113, 97);
   border: none;
-  color: whitesmoke;
-  padding: 15px 32px;
+  color: white;
+  padding: 10px;
   width: 100%;
   cursor: pointer;
+}
 
-  font-family: poppins;
+.producto-añadir-btn{
+  margin-top: 2%;
+  text-decoration: none;
+  background-color: #552626;
+  color:white;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  padding: 2%
 }
 
 /*PRODUCTO DETALLE*/
 .detalle-container {
   display: flex;
   gap: 30px;
-  padding: 8%;
-  background-color: #50262d;
-  color: whitesmoke;
+  background-color: wheat;
+  color: #552626;
   margin: 5% auto;
   max-width: 800px;
   align-items: center;
 }
 
 .detalle-imagen {
-  width: 20rem;
-  height: 20rem;
-  object-fit: cover;
+  width: 25rem;
 }
 
 .detalle-info {
@@ -134,36 +165,56 @@ footer{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 5px;
+}
+
+.detalle-titulo{
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.detalle-precio{
+  font-size: 1.5rem;
+  margin-bottom: 25%;
 }
 
 .detalle-contador {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2%;
+  gap: 10%;
 }
 
-.detalle-contador button {
- background-color: #a75865;
+.detalle-contador-btn {
+ background-color: rgb(202, 113, 97);
+ font-weight: bold;
  border: none;
- color: whitesmoke;
+ color: white;
  font-size: medium;
  cursor: pointer; 
- width: 10%;
-}
-
-.detalle-contador span {
-  font-size: 18px;
+ width: 15%;
+ padding: 2%;
 }
 
 .detalle-btn{
-  background-color: whitesmoke;
+  background-color: #552626;
   border: none;
-  color: #50262d;
+  color: white;
   font-size: medium;
   font-weight: bold;
   cursor: pointer;
+  width: 60%;
+  padding: 2%;
+}
+
+.detalle-editar-btn{
+  margin-right: 5%;
+  text-decoration: none;
+  border: none;
+  background-color: #552626;
+  color: white;
+  font-size: medium;
+  font-weight: bold;
   padding: 2%;
 }
 
@@ -183,7 +234,8 @@ footer{
   flex-direction: row;
   justify-content: center;
   min-height: 80vh;
-  margin-top: 10px;
+  margin: 5%;
+  color: #552626;
 }
 
 .carrito-titulos{
@@ -191,7 +243,6 @@ footer{
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 30%;
   width: 100%;
 }
 
@@ -206,18 +257,18 @@ footer{
 .carrito-card{
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  background-color: whitesmoke;
+  background-color: white;
   width: 100%;
-  text-align: left;
-  height: 35%;
+  height: 25%;
   padding: 2%;
-  color: #50262d;
+  color: #552626;
 }
 
 .carrito-producto{
   width: 20%;
+  font-weight: bold;
 }
 
 .descripcion-carrito{
@@ -225,21 +276,18 @@ footer{
 }
 
 .boton-carrito{
-  background-color: #50262d;
+  background-color: rgb(202, 113, 97);
   border: none;
-  color: whitesmoke;
-  padding: 2%;
-  width: 5%;
+  color: white;
+  padding: 1%;
   cursor: pointer;
-  font-family: poppins;
 }
 
 .boton-vaciar {
   width: 100%;
-  padding: 1%;
-  background-color: #50262d;
+  background-color: rgb(202, 113, 97);
   border: none;
-  color: whitesmoke;
+  color: white;
   font-weight: bold;
 }
 
@@ -250,6 +298,7 @@ footer{
   justify-content: center;
   text-align: center;
   width: 100%;
+  font-size: large;
 }
 
 .carrito-total{

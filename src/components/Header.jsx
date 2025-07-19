@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Header() {  
     return (  
         <header style={{ }}>  
-            <Link to="/">Marruca</Link>  
+            <Link to="/" aria-label="Inicio">Marruca</Link>  
         </header>  
     );  
 }

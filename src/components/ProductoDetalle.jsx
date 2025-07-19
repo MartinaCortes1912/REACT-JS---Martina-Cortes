@@ -8,7 +8,7 @@ import { useProductosContext } from "../contexts/ProductosContext";
 
 function ProductoDetalle({}) {
 
-  const{user} = useAuthContext();
+  const{admin} = useAuthContext();
 
   const {agregarAlCarrito} = useContext(CarritoContext);
   const { productoEncontrado, obtenerProducto, eliminarProducto, cargando, error } = useProductosContext();
@@ -61,16 +61,20 @@ function ProductoDetalle({}) {
     <div className="detalle-container">
       <img className="detalle-imagen" src={productoEncontrado.imagen} alt={productoEncontrado.name} />
       <div className="detalle-info">
-        <h2>{productoEncontrado.name}</h2>
-        <p>$ {productoEncontrado.price}</p>
+        <h2 className="detalle-titulo">{productoEncontrado.name}</h2>
         <p>{productoEncontrado.description}</p>
-        {user ? null : <div className="detalle-contador">
-          <button onClick={restarContador}>-</button>
-          <span>{cantidad}</span>
-          <button onClick={sumarContador}>+</button>
-        </div>}
-        {user ? <Link to={`/admin/editar/${id}`}>Editar Producto</Link> : <button className="detalle-btn" onClick={funcionCarrito}>Agregar al carrito</button>}
-        {user ? <button onClick={dispararEliminar} >Eliminar</button> : null}
+        <p className="detalle-precio">$ {productoEncontrado.price}</p>
+            {admin ? <div>
+            <Link to={`/admin/editar/${id}`} className="detalle-editar-btn" aria-label="Editar producto">Editar</Link>
+            <Link onClick={dispararEliminar} className="detalle-editar-btn" aria-label="Eliminar producto">Eliminar</Link>
+            </div>
+            :
+            <div className="detalle-contador">
+            <button className="detalle-contador-btn" onClick={restarContador} aria-label="Menos">-</button>
+            <span>{cantidad}</span>
+            <button className="detalle-contador-btn" onClick={sumarContador} aria-label="Más">+</button>
+            <button className="detalle-btn" onClick={funcionCarrito} aria-label="Agregar al carrito">Agregar</button>
+            </div>}    
       </div>
     </div>
   );

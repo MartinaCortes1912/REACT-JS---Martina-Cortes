@@ -1,6 +1,6 @@
 import { useAuthContext } from '../contexts/AuthContext.jsx';
 
-export default function Admin() {
+export default function User() {
   const { logout } = useAuthContext();
 
   const handleSubmit = (e) => {
@@ -10,9 +10,9 @@ export default function Admin() {
 
   return(
     <section className="login">
-      <h2 className="titulo">¡Hola Admin!</h2>
+      <h2 className="titulo">¡Hola User!</h2>
       <p>
-        No tenemos noticias para vos, pero ¡Acordáte que podes manejar todo el inventario desde la sección <b>Productos</b>!
+        No tenemos noticias para vos, pero ¡Te invitamos a explorar nuestra sección de <b>Productos</b>!
       </p>
       <form onSubmit={handleSubmit}>
         <button type="submit" aria-label="Cerrar sesión">Cerrar sesión</button>

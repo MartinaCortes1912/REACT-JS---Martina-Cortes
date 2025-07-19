@@ -1,120 +1,70 @@
 import React, { useState } from 'react';
+import { Link } from'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
-import { crearUsuario } from '../auth/firebase';
+import { loginEmailPass } from '../auth/firebase';
 
 function Login() {
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
-  const { login, logout, user } = useAuthContext();
+  const {login} = useAuthContext();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  function iniciarSesionEmailPass(e) {
     e.preventDefault();
-    // Simulación de autenticación
-    if (usuario === 'admin' && password === '1234') {
-      login(usuario);
-      navigate('/');
-    } else {
-      alert('Credenciales incorrectas');
-    }
-  };
-
-  const handleSubmit2 = (e) => {
-    logout()
-  };
-
-  function registrarUsuario (e) {
-    e.preventDefault();
-    crearUsuario(usuario, password)
-    login(usuario)
+    
+    loginEmailPass(usuario, password)
+      .then((userCredential) => {
+        const email = userCredential.user.email;
+        login(email);
+        alert("Logeo exitoso");
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error("Error de autenticación:", error);
+        if(error.code === "auth/invalid-credential"){
+          alert("Credenciales incorrectas");
+        } else if(error.code === "auth/user-not-found"){
+          alert("Usuario no encontrado");
+        } else if(error.code === "auth/wrong-password"){
+          alert("Contraseña incorrecta");
+        } else {
+          alert("Error de autenticación: " + error.message);
+        }
+      });
   }
 
-  function iniciarSesionEmailPass (e) {
-    e.preventDefault();
-    loginEmailPass(usuario, password).then((user) => {
-      login(usuario)
-      dispararSweetBasico("Logeo exitoso", "", "success", "Confirmar")
-    }).catch((error) => {
-      if(error.code == "auth/invalid-credential"){
-        dispararSweetBasico("Credenciales incorrectas", "", "error", "Cerrar")
-      }
-      //alert("Error")
-    })
-  }
-
-  if(user === "admin"){
-    return(
-        <form onSubmit={handleSubmit2}>
-        <button type="submit">Cerrar sesión</button>
-        </form>
-    )
-  }
   return (
-    <div>
-    <form onSubmit={handleSubmit}>
-      <h2>Iniciar sesión</h2>
-      <div>
-        <label>Usuario:</label>
-        <input
-          type="text"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Contraseña:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button type="submit">Iniciar sesión</button>
-    </form>
-
-    <form onSubmit={registrarUsuario}>
-      <h2>Registrarse</h2>
-      <div>
-        <label>Email:</label>
-        <input
-          type="text"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Contraseña:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button type="submit">Registrarse</button>
-    </form>
-
-    <form onSubmit={iniciarSesionEmailPass}>
-      <h2>Iniciar con Email y contraseña</h2>
-      <div>
-        <label>Email:</label>
-        <input
-          type="text"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Contraseña:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button type="submit">Iniciar Email</button>
-    </form>
+    <div className='login'>
+      <form onSubmit={iniciarSesionEmailPass}>
+        <h2 className='titulo'>Iniciar Sesión</h2>
+        <p>¡Recordá que para finalizar tu compra debes iniciar sesión!</p>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
+            required
+            aria-label="Email"
+          />
+        </div>
+        <div>
+          <label>Contraseña:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            aria-label="Contraseña"
+          />
+        </div>
+        <button type="submit" aria-label="Iniciar sesión">Iniciar Sesión</button>
+        <Link to="/signin" aria-label="Registrarse">Sino tenes usuario. . . <u>¡Registrate!</u></Link>
+        <p className="login-usuarios"><b>*</b>Psst! Usá . . . <b>user:</b> user@gmail.com | test12 . . . y . . . <b>admin:</b> admin@gmail.com | test12</p>
+      </form>
     </div>
   );
 }
+
 export default Login;
