@@ -3,18 +3,19 @@ import { Link } from'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
 import { crearUsuario } from '../auth/firebase';
+import { dispararSweetBasico } from '../assets/SweetAlert';
 
 function Signin() {
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
-  const { login, user } = useAuthContext();
+  const { login} = useAuthContext();
   const navigate = useNavigate();
 
   function registrarUsuario (e) {
     e.preventDefault();
     crearUsuario(usuario, password)
     login(usuario)
-    alert("Logeo exitoso");
+    dispararSweetBasico("¡Bienvenido!", "Te has logeado con éxito", "success", "Cerrar");
     navigate('/');
   }
 
@@ -26,7 +27,8 @@ return (
   <br></br>
   <label>Email:</label>
   <input
-    type="text"
+    placeholder="ejemplo@gmail.com"
+    type="email"
     value={usuario}
     onChange={(e) => setUsuario(e.target.value)}
     aria-label="Email"
@@ -35,6 +37,8 @@ return (
 <div>
   <label>Contraseña:</label>
   <input
+    placeholder="contraseña123"
+    minLength="6"
     type="password"
     value={password}
     onChange={(e) => setPassword(e.target.value)}

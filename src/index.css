@@ -53,10 +53,10 @@ footer{
   font-size: small;
 }
 
-/*LOGIN*/
+/*FORMULARIOS*/
 .login {
   padding: 20px;
-  margin: auto;
+  margin: auto auto 8%;
   min-Height: 80vh;
   max-width: 60vw;
   color: #552626;
@@ -67,6 +67,12 @@ footer{
 }
 
 .login input{
+  width: 100%;
+  padding: 1%;
+  margin-bottom: 3%;
+}
+
+.login textarea{
   width: 100%;
   padding: 1%;
   margin-bottom: 3%;
@@ -143,6 +149,58 @@ footer{
   text-align: center;
   font-weight: bold;
   padding: 2%
+}
+
+.producto-buscador{
+  margin-top: 2%;
+  width: 100%;
+}
+
+.producto-buscador span{
+  background-color: white;
+  border: none;
+  border-radius: 0%;
+  color: rgb(202, 113, 97);
+}
+
+.producto-buscador input{
+  background-color: rgb(202, 113, 97);
+  border: none;
+  border-radius: 0%;
+  width: 100%;
+  color: white;
+}
+
+.producto-buscador input::placeholder{
+  color: white;
+}
+
+.producto-buscador input:focus{
+  border: none;
+  transition: none;
+  animation: none;
+  box-shadow: none;
+  background-color: rgb(202, 113, 97);
+  color: white;
+
+}
+
+.producto-pagina button{
+  text-decoration: none;
+  border: none;
+  border-radius: 0%;
+  color: white;
+  width: 2rem;
+}
+
+.producto-pagina button.producto-pagina-actual{
+  background-color: #552626 !important;
+  color: white !important; 
+}
+
+.producto-pagina button.producto-pagina-opcion{
+ background-color: rgb(202, 113, 97) !important;
+ color: white !important;
 }
 
 /*PRODUCTO DETALLE*/

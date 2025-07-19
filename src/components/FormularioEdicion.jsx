@@ -78,13 +78,13 @@ function FormularioEdicion() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className='d-flex flex-column justify-content-center align-items-center min-vh-100'>
-      <form onSubmit={handleSubmit} className="p-4 border rounded shadow">
-        <h3>Editar Producto</h3>
+    <div>
+      <form onSubmit={handleSubmit} className='login'>
+        <h2 className="titulo">Editar Producto</h2>
         <div>
-          <label className="form-label">Nombre:</label>
+          <br></br>
+          <label>Nombre:</label>
           <input
-            className="form-control"
             type="text"
             name="name"
             value={producto.name || ''}
@@ -93,10 +93,9 @@ function FormularioEdicion() {
           />
         </div>
         <div>
-          <label className="form-label">Imagen URL:</label>
+          <label>Imagen URL:</label>
           <input
-            type="text" 
-            className="form-control" 
+            type="text"
             name="imagen" 
             value={producto.imagen || ''} 
             onChange={handleChange} 
@@ -104,29 +103,27 @@ function FormularioEdicion() {
           />
         </div>
         <div>
-          <label className="form-label">Precio:</label>
+          <label>Precio:</label>
           <input
             type="number"
             name="price"
             value={producto.price || ''}
             onChange={handleChange}
             required
-            className="form-control"
             min="0"
           />
         </div>
         <div>
-          <label className="form-label">Descripción:</label>
+          <label>Descripción:</label>
           <textarea
             name="description"
             value={producto.description || ''}
             onChange={handleChange}
             required
-            className="form-control"
           />
         </div>
-        <button type="submit" className="btn btn-primary me-2">Actualizar Producto</button>
-        <Link to={`/productos/${id}`} className="btn btn-secondary">Cancelar</Link>
+        <button type="submit">Actualizar Producto</button>
+        <Link to={`/productos/${id}`}>¿Querés <u>cancelar</u> la edición?</Link>
       </form>
     </div>
   );

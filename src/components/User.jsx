@@ -1,11 +1,18 @@
 import { useAuthContext } from '../contexts/AuthContext.jsx';
+import { dispararSweetConfirmacion} from '../assets/SweetAlert.js';
 
 export default function User() {
   const { logout } = useAuthContext();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    logout();
+    
+    const result = await dispararSweetConfirmacion(
+    );
+
+    if (result.isConfirmed) {
+      logout();
+    }
   };
 
   return(

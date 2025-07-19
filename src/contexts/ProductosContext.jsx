@@ -3,6 +3,7 @@ import React, { createContext, useState, useContext } from 'react';
 const ProductosContext = createContext();
 export function ProductosProvider({ children }) {
     const [productos, setProductos] = useState([])
+    const [productosOriginales, setProductosOriginales] = useState([])
     const [productoEncontrado, setProductoEncontrado] = useState([])
 
     function obtenerProductos() {
@@ -15,6 +16,7 @@ export function ProductosProvider({ children }) {
                 .then((datos) => {
                     console.log(datos)
                     setProductos(datos)
+                    setProductosOriginales(datos)
                     res(datos)
                 })
                 .catch((error) => {
@@ -98,30 +100,35 @@ function editarProducto(producto){
     )
 }
 
-   const eliminarProducto = (id) => {
-    const confirmar = window.confirm('¿Estás seguro de eliminar?');
-    if (confirmar) {
-        return(
-            new Promise(async (res, rej) => {
-                try {
-                    const respuesta = await fetch(`https://6831696e6205ab0d6c3c32c7.mockapi.io/productos/${id}`, {
-                    method: 'DELETE',
-                    });
-                    if (!respuesta.ok) throw new Error('Error al eliminar');
-                    alert('Producto eliminado correctamente.');
-                    res()
-                } catch (error) {
-                    console.error(error.message);
-                    alert('Hubo un problema al eliminar el producto.');
-                    rej(error)
-                }
-            })
-        )
+const eliminarProducto = (id) => {
+    return new Promise(async (res, rej) => {
+        try {
+            const respuesta = await fetch(`https://6831696e6205ab0d6c3c32c7.mockapi.io/productos/${id}`, {
+                method: 'DELETE',
+            });
+            if (!respuesta.ok) throw new Error('Error al eliminar');
+            res()
+        } catch (error) {
+            console.error(error.message);
+            rej(error)
+        }
+    })
+}
+
+function filtrarProductos(filtro){
+    if(filtro.length < 0){
+        setProductos(productosOriginales)
+        return;
     }
+
+    const productosFiltrados = productosOriginales.filter((producto) =>
+        producto.name.toLowerCase().includes(filtro.toLowerCase())
+    );
+    setProductos(productosFiltrados)
 }
 
 return (
-    <ProductosContext.Provider value={{ obtenerProductos, productos, agregarProducto, obtenerProducto, productoEncontrado, editarProducto, eliminarProducto}}>
+    <ProductosContext.Provider value={{ filtrarProductos, obtenerProductos, productos, agregarProducto, obtenerProducto, productoEncontrado, editarProducto, eliminarProducto}}>
     {children}
     </ProductosContext.Provider> 
 );

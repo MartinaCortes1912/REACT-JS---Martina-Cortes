@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext.jsx'
 import { CarritoProvider } from './contexts/CarritoContext.jsx'
 import { ProductosProvider } from './contexts/ProductosContext.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Helmet } from 'react-helmet'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -16,5 +17,5 @@ createRoot(document.getElementById('root')).render(
     </CarritoProvider>
     </AuthProvider>
     </ProductosProvider>
-  </StrictMode>,
+  </StrictMode>
 )

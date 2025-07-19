@@ -3,6 +3,7 @@ import { Link } from'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../contexts/AuthContext';
 import { loginEmailPass } from '../auth/firebase';
+import { dispararSweetBasico } from '../assets/SweetAlert';
 
 function Login() {
   const [usuario, setUsuario] = useState('');
@@ -17,19 +18,19 @@ function Login() {
       .then((userCredential) => {
         const email = userCredential.user.email;
         login(email);
-        alert("Logeo exitoso");
+        dispararSweetBasico("¡Bienvenido!", "Te has logeado con éxito", "success", "Cerrar");
         navigate('/');
       })
       .catch((error) => {
         console.error("Error de autenticación:", error);
         if(error.code === "auth/invalid-credential"){
-          alert("Credenciales incorrectas");
+          dispararSweetBasico("Opps...", "Credenciales incorrectas", "error", "Cerrar");
         } else if(error.code === "auth/user-not-found"){
-          alert("Usuario no encontrado");
+          dispararSweetBasico("Opps...", "Usario no encontrado", "error", "Cerrar");
         } else if(error.code === "auth/wrong-password"){
-          alert("Contraseña incorrecta");
+          dispararSweetBasico("Opps...", "Contraseña incorrecta", "error", "Cerrar");
         } else {
-          alert("Error de autenticación: " + error.message);
+          dispararSweetBasico("Opps...", "Error de autenticación", "error", "Cerrar");
         }
       });
   }
@@ -42,6 +43,7 @@ function Login() {
         <div>
           <label>Email:</label>
           <input
+            placeholder="ejemplo@gmail.com"
             type="email"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
@@ -52,6 +54,7 @@ function Login() {
         <div>
           <label>Contraseña:</label>
           <input
+            placeholder="contraseña123"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

@@ -1,20 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
-import { dispararSweetBasico } from "../assets/SweetAlert";
+import { useParams, Link, useNavigate } from "react-router-dom"; // Agregar useNavigate
+import { dispararSweetBasico, dispararSweetConfirmacion } from "../assets/SweetAlert"; // Agregar dispararSweetConfirmacion
 import { CarritoContext } from "../contexts/CarritoContext";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useProductosContext } from "../contexts/ProductosContext";
 
-
 function ProductoDetalle({}) {
-
-  const{admin} = useAuthContext();
-
-  const {agregarAlCarrito} = useContext(CarritoContext);
+  const { admin } = useAuthContext();
+  const { agregarAlCarrito } = useContext(CarritoContext);
   const { productoEncontrado, obtenerProducto, eliminarProducto, cargando, error } = useProductosContext();
-  
-
   const { id } = useParams();
+  const navigate = useNavigate(); // Inicializar navigate
   const [cantidad, setCantidad] = useState(1);
 
   useEffect(() => {
@@ -46,10 +42,16 @@ function ProductoDetalle({}) {
   }
 
   function dispararEliminar(){
-    eliminarProducto(id).then(() => {
-      navigate("/productos")
-    }).catch((error) => {
-      dispararSweetBasico("Hubo un problema al agregar el producto", error, "error", "Cerrar")
+    dispararSweetConfirmacion().then((result) => {
+      if (result.isConfirmed) {
+        eliminarProducto(id).then(() => {
+          dispararSweetBasico("Eliminado", "El producto se ha eliminado con éxito.", "success", "Aceptar").then(() => {
+            navigate("/productos")
+          })
+        }).catch((error) => {
+          dispararSweetBasico("Hubo un problema al eliminar el producto", error, "error", "Cerrar")
+        })
+      }
     })
   }
 
@@ -66,7 +68,7 @@ function ProductoDetalle({}) {
         <p className="detalle-precio">$ {productoEncontrado.price}</p>
             {admin ? <div>
             <Link to={`/admin/editar/${id}`} className="detalle-editar-btn" aria-label="Editar producto">Editar</Link>
-            <Link onClick={dispararEliminar} className="detalle-editar-btn" aria-label="Eliminar producto">Eliminar</Link>
+            <button onClick={dispararEliminar} className="detalle-editar-btn" aria-label="Eliminar producto">Eliminar</button>
             </div>
             :
             <div className="detalle-contador">

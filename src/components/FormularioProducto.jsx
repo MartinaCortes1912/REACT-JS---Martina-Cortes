@@ -47,9 +47,10 @@ function FormularioProducto() {
           }
 
   return (
-  <form onSubmit={handleSubmit}> 
-    <h2>Agregar Producto</h2>
+  <form onSubmit={handleSubmit} className='login'> 
+    <h2 className='titulo'>Agregar Producto</h2>
     <div>
+      <br></br>
       <label>Nombre:</label>
       <input
         type="text" name="name" value={producto.name} onChange={handleChange} required/>

@@ -13,10 +13,12 @@ export default function Carrito() {
 
     function funcionDisparadora(id){
         borrarProductoCarrito(id)
+        dispararSweetBasico("Producto Eliminado", "El producto fue agregado al carrito con éxito", "success", "Cerrar");
     }
 
     function funcionDisparadora2(){
         vaciarCarrito()
+        dispararSweetBasico("Carrito Vaciado", "El producto fue agregado al carrito con éxito", "success", "Cerrar");
     }
 
     console.log("Total: " + total)
