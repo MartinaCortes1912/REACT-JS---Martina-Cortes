@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { agregarProducto } from '../assets/requests';
+import { useProductosContext } from '../contexts/ProductosContext';
 
 function FormularioProducto() {
+  const {agregarProducto} = useProductosContext();
   const [producto, setProducto] = useState({
     name: '',
     price: '',

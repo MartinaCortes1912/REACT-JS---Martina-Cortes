@@ -2,28 +2,19 @@ import "../styles/Productos.css"
 
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { useProductosContext } from "../contexts/ProductosContext"
+import {Helmet} from "react-helmet";
+import { useAuthContext } from "../contexts/AuthContext";
 
 function ProductosContainer(){
-    const [productos, setProductos] = useState([])
-    const [cargando, setCargando] = useState(true);
-    const [error, setError] = useState(null);
+    const { productos, obtenerProductos, cargando, error } = useProductosContext();
+    const{user} = useAuthContext();
 
-    {useEffect(() => {
-        fetch('https://6831696e6205ab0d6c3c32c7.mockapi.io/productos')
-            .then((respuesta) =>
-                respuesta.json()
-            )
-            .then((datos) => {
-                console.log(datos)
-                setProductos(datos)
-                setCargando(false);
-            })
-            .catch((error) => {
-                console.log("Error", error)
-                setError('Hubo un problema al cargar los productos.');
-                setCargando(false);
-            });
-    }, []);}
+    useEffect(() => {
+        obtenerProductos().catch((error) => {
+            console.error('Error al cargar productos:', error);
+        });
+    }, []);
 
 
     if (cargando) {
@@ -33,6 +24,11 @@ function ProductosContainer(){
     }else{
         return(
             <div className="productos-conteiner">
+                <Helmet>
+                <title>Marruca | Productos</title>
+                <meta name="description" content="Explora nuestra variedad de productos." />
+                </Helmet>
+                {user ? <Link to="/admin/productos" style={{ color: "white", textDecoration: "none" }}>Productos</Link> : null}
                 {productos.map((producto) => (
                     <div className="producto-card" >
                     <h2 className="producto-titulo">{producto.name}</h2>
@@ -44,8 +40,6 @@ function ProductosContainer(){
             </div>
         )
     }
-
-    
 }
 
 export default ProductosContainer

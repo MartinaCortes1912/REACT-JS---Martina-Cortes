@@ -1,42 +1,41 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import "../styles/ProductoDetalle.css";
 import { dispararSweetBasico } from "../assets/SweetAlert";
 import { CarritoContext } from "../contexts/CarritoContext";
+import { useAuthContext } from "../contexts/AuthContext";
+import { useProductosContext } from "../contexts/ProductosContext";
+
 
 function ProductoDetalle({}) {
 
+  const{user} = useAuthContext();
+
   const {agregarAlCarrito} = useContext(CarritoContext);
+  const { productoEncontrado, obtenerProducto, eliminarProducto, cargando, error } = useProductosContext();
+  
 
   const { id } = useParams();
-  const [producto, setProducto] = useState(null);
   const [cantidad, setCantidad] = useState(1);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://6831696e6205ab0d6c3c32c7.mockapi.io/productos")
-      .then((res) => res.json())
-      .then((datos) => {
-        const productoEncontrado = datos.find((item) => item.id.toString() === id);
-        if (productoEncontrado) {
-          setProducto(productoEncontrado);
-        } else {
-          setError("Producto no encontrado.");
-        }
-        setCargando(false);
-      })
-      .catch((err) => {
-        console.log("Error:", err);
+    obtenerProducto(id).then(() => {
+      setCargando(false);
+    }).catch((error) => {
+      if(error == "Producto no encontrado"){
+        setError("Producto no encontrado")
+      }
+      if(error == "Hubo un error al obtener el producto."){
         setError("Hubo un error al obtener el producto.");
-        setCargando(false);
-      });
+      }
+      setCargando(false);
+    })
   }, [id]);
 
   function funcionCarrito() {
     if (cantidad < 1) return;
     dispararSweetBasico("Producto Agregado", "El producto fue agregado al carrito con éxito", "success", "Cerrar");
-    agregarAlCarrito({ ...producto, cantidad });
+    agregarAlCarrito({ ...productoEncontrado, cantidad });
   }
 
   function sumarContador() {
@@ -47,23 +46,32 @@ function ProductoDetalle({}) {
     if (cantidad > 1) setCantidad(cantidad - 1);
   }
 
+  function dispararEliminar(){
+    eliminarProducto(id).then(() => {
+      navigate("/productos")
+    }).catch((error) => {
+      dispararSweetBasico("Hubo un problema al agregar el producto", error, "error", "Cerrar")
+    })
+  }
+
   if (cargando) return <p>Cargando producto...</p>;
   if (error) return <p>{error}</p>;
-  if (!producto) return null;
+  if (!productoEncontrado) return null;
 
   return (
     <div className="detalle-container">
-      <img className="detalle-imagen" src={producto.imagen} alt={producto.name} />
+      <img className="detalle-imagen" src={productoEncontrado.imagen} alt={productoEncontrado.name} />
       <div className="detalle-info">
-        <h2>{producto.name}</h2>
-        <p>$ {producto.price}</p>
-        <p>{producto.description}</p>
-        <div className="detalle-contador">
+        <h2>{productoEncontrado.name}</h2>
+        <p>$ {productoEncontrado.price}</p>
+        <p>{productoEncontrado.description}</p>
+        {user ? null : <div className="detalle-contador">
           <button onClick={restarContador}>-</button>
           <span>{cantidad}</span>
           <button onClick={sumarContador}>+</button>
-        </div>
-        <button className="detalle-btn" onClick={funcionCarrito}>Agregar al carrito</button>
+        </div>}
+        {user ? <Link to={`/admin/editar/${id}`}>Editar Producto</Link> : <button className="detalle-btn" onClick={funcionCarrito}>Agregar al carrito</button>}
+        {user ? <button onClick={dispararEliminar} >Eliminar</button> : null}
       </div>
     </div>
   );
