@@ -11,28 +11,36 @@ function Login() {
   const {login} = useAuthContext();
   const navigate = useNavigate();
 
+  const validarFormulario = () => {
+    if (!usuario.trim()) {
+      return "El email no debe estar vacío.";
+    }
+    if (!password.trim()) {
+      return "La contraseña no debe estar vacía.";
+    }
+    return true;
+  };
+
   function iniciarSesionEmailPass(e) {
     e.preventDefault();
+    const validarForm = validarFormulario();
     
-    loginEmailPass(usuario, password)
-      .then((userCredential) => {
-        const email = userCredential.user.email;
-        login(email);
-        dispararSweetBasico("¡Bienvenido!", "Te has logeado con éxito", "success", "Cerrar");
-        navigate('/');
-      })
-      .catch((error) => {
-        console.error("Error de autenticación:", error);
-        if(error.code === "auth/invalid-credential"){
-          dispararSweetBasico("Opps...", "Credenciales incorrectas", "error", "Cerrar");
-        } else if(error.code === "auth/user-not-found"){
-          dispararSweetBasico("Opps...", "Usario no encontrado", "error", "Cerrar");
-        } else if(error.code === "auth/wrong-password"){
-          dispararSweetBasico("Opps...", "Contraseña incorrecta", "error", "Cerrar");
-        } else {
-          dispararSweetBasico("Opps...", "Error de autenticación", "error", "Cerrar");
-        }
-      });
+    if (validarForm === true) {
+      loginEmailPass(usuario, password)
+        .then((userCredential) => {
+          const email = userCredential.user.email;
+          login(email);
+          dispararSweetBasico("¡Bienvenido!", "Te has logeado con éxito", "success", "Cerrar");
+          navigate('/');
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          dispararSweetBasico("Opps...", "Hubo un error en la autenticación", "error", "Cerrar");
+          }
+        );
+    } else {
+      dispararSweetBasico("Opps...", validarForm, "warning", "Cerrar");
+    }
   }
 
   return (
@@ -47,7 +55,6 @@ function Login() {
             type="email"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
-            required
             aria-label="Email"
           />
         </div>
@@ -58,7 +65,6 @@ function Login() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
             aria-label="Contraseña"
           />
         </div>

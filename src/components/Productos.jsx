@@ -9,7 +9,7 @@ function ProductosContainer(){
     const{admin} = useAuthContext();
 
     const {productos, obtenerProductos, filtrarProductos} = useProductosContext();
-    const productosPorPagina = 3;
+    const productosPorPagina = 6;
     const [paginaActual, setPaginaActual] = useState(1);
     const indiceUltimoProducto = paginaActual * productosPorPagina;
     const indicePrimerProducto = indiceUltimoProducto - productosPorPagina;
@@ -23,6 +23,7 @@ function ProductosContainer(){
         obtenerProductos().then((productos) => {
             setCargando(false);
         }).catch((error) => {
+            console.error("Error:", error);
             setError('Hubo un problema al cargar los productos.');
             setCargando(false);
         })
@@ -47,6 +48,19 @@ function ProductosContainer(){
                 <meta name="description" content="Explora nuestra variedad de productos." />
                 </Helmet>
                 <div className="producto-buscador">
+                <div className="producto-pagina">
+                <div className="d-flex justify-content-center my-4">
+                    {Array.from({ length: totalPaginas }, (_, index) => (
+                    <button
+                        key={index + 1}
+                        className={`btn mx-1 ${paginaActual === index + 1 ? "producto-pagina-actual" : "producto-pagina-opcion"}`}
+                        onClick={() => cambiarPagina(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                    ))}
+                </div>
+                </div>
                 <div className="input-group mb-3 mt-3">
                     <span className="input-group-text">
                         <FaSearch />
@@ -70,19 +84,6 @@ function ProductosContainer(){
                     <p>$ {producto.price}</p>
                                     </div>
                 ))}
-                </div>
-                <div className="producto-pagina">
-                <div className="d-flex justify-content-center my-4">
-                    {Array.from({ length: totalPaginas }, (_, index) => (
-                    <button
-                        key={index + 1}
-                        className={`btn mx-1 ${paginaActual === index + 1 ? "producto-pagina-actual" : "producto-pagina-opcion"}`}
-                        onClick={() => cambiarPagina(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                    ))}
-                </div>
                 </div>
             </div>
         )

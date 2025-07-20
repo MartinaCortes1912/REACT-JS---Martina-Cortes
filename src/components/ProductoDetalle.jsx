@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom"; // Agregar useNavigate
-import { dispararSweetBasico, dispararSweetConfirmacion } from "../assets/SweetAlert"; // Agregar dispararSweetConfirmacion
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { dispararSweetBasico, dispararSweetConfirmacion } from "../assets/SweetAlert";
 import { CarritoContext } from "../contexts/CarritoContext";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useProductosContext } from "../contexts/ProductosContext";
@@ -10,7 +10,7 @@ function ProductoDetalle({}) {
   const { agregarAlCarrito } = useContext(CarritoContext);
   const { productoEncontrado, obtenerProducto, eliminarProducto, cargando, error } = useProductosContext();
   const { id } = useParams();
-  const navigate = useNavigate(); // Inicializar navigate
+  const navigate = useNavigate();
   const [cantidad, setCantidad] = useState(1);
 
   useEffect(() => {
@@ -41,18 +41,20 @@ function ProductoDetalle({}) {
     if (cantidad > 1) setCantidad(cantidad - 1);
   }
 
-  function dispararEliminar(){
-    dispararSweetConfirmacion().then((result) => {
+  async function dispararEliminar(){
+    try {
+      const result = await dispararSweetConfirmacion();
+      
       if (result.isConfirmed) {
-        eliminarProducto(id).then(() => {
-          dispararSweetBasico("Eliminado", "El producto se ha eliminado con éxito.", "success", "Aceptar").then(() => {
-            navigate("/productos")
-          })
-        }).catch((error) => {
-          dispararSweetBasico("Hubo un problema al eliminar el producto", error, "error", "Cerrar")
-        })
+        await eliminarProducto(id);
+        
+        await dispararSweetBasico("Eliminado", "El producto se ha eliminado con éxito.", "success", "Aceptar");
+        navigate("/productos");
       }
-    })
+    } catch (error) {
+      console.error("Error al eliminar:", error);
+      dispararSweetBasico("Error", "Hubo un problema al eliminar el producto", "error", "Cerrar");
+    }
   }
 
   if (cargando) return <p>Cargando producto...</p>;

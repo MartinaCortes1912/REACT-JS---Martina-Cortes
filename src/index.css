@@ -3,14 +3,6 @@
   background-color: wheat;
 }
 
-/*CLASES*/
-.titulo{
-  font-size: 2rem;
-  font-weight: bold;
-  padding-top: 8%;
-  padding-bottom: 1%;
-}
-
 /*HEADER*/
 header {
   font-weight: bold;
@@ -36,13 +28,21 @@ nav ul{
   display: flex;
   justify-content: left;
   gap: 2rem;
-  margin: 0 
+  margin: 0% 
 }
 
 nav ul li a {
   text-decoration: none;
   font-weight: bold;
   color: white
+}
+
+.nav-text {
+  display: inline;
+}
+
+.nav-icon {
+  display: none;
 }
 
 /*FOOTER*/
@@ -54,6 +54,13 @@ footer{
 }
 
 /*FORMULARIOS*/
+.titulo{
+  font-size: 2rem;
+  font-weight: bold;
+  padding-top: 8%;
+  padding-bottom: 1%;
+}
+
 .login {
   padding: 20px;
   margin: auto auto 8%;
@@ -103,6 +110,8 @@ footer{
   background-color: grey;
   color: white;
 }
+
+/*INICIO*/
 
 /*PRODUCTOS*/
 .productos-conteiner{
@@ -362,4 +371,105 @@ footer{
 .carrito-total{
   height: 30%;
   width: 100%;
+}
+
+
+/**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
+@media (max-width: 768px) {
+  /*NAV*/
+  nav ul {
+    justify-content: left;
+    gap: 1rem;
+  }
+
+  .nav-text {
+    display: none;
+  }
+
+  .nav-icon {
+    display: inline;
+    font-size: 1.2rem;
+  }  
+
+  /*LOGIN*/
+  .login{
+    max-width: 80vw;
+    min-height: 70vh;
+    font-size: small;
+  }
+
+  .login input{
+    margin-bottom: 6%;
+  }
+
+  .login textarea{
+    margin-bottom: 6%;
+  }
+ .login button{
+    margin-bottom: 6%;
+  }
+
+  /*INICIO*/
+ 
+  /* PRODUCTO DETALLE RESPONSIVE */
+    .detalle-container {
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+      max-width: 80vw;
+    }
+  
+    .detalle-imagen {
+      width: 100%;
+    }
+  
+    .detalle-titulo {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 5%;
+    }
+  
+    .detalle-precio {
+      font-size: 1.5rem;
+      margin: 10%;
+      text-align: center;
+    }
+  
+    .detalle-contador {
+      gap: 5%;
+      justify-content: center;
+    }
+  
+    .detalle-contador-btn {
+      width: 25%;
+      padding: 3%;
+      font-size: 1.2rem;
+    }
+  
+    .detalle-btn {
+      width: 100%;
+      padding: 4%;
+      font-size: 1.1rem;
+    }
+  
+    .detalle-editar-btn {
+      width: 40%;
+      text-align: center;
+      padding: 3%;
+    }
+  
+    .detalle-container .detalle-info > div:has(.detalle-editar-btn) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+  /*NOSOTROS*/
+  .nosotros{
+    max-width: 80vw;
+    font-size: small;
+    min-height: 70vh;
+  }
+  /*CARRITO*/
 }

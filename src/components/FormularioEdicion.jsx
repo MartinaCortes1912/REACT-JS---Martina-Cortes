@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useProductosContext } from "../contexts/ProductosContext";
-import { useAuthContext } from "../contexts/AuthContext";
+import { dispararSweetBasico } from "../assets/SweetAlert";
 
 function FormularioEdicion() {
   const { obtenerProducto, productoEncontrado, editarProducto } = useProductosContext();
@@ -30,7 +30,6 @@ function FormularioEdicion() {
     })
   }, [id]);
 
-  // Actualizar el estado local cuando se carga el producto
   useEffect(() => {
     if (productoEncontrado) {
       setProducto(productoEncontrado);
@@ -46,14 +45,14 @@ function FormularioEdicion() {
     if (!producto.name.trim()) {
       return "El nombre es obligatorio."
     }
+    if (!producto.imagen.trim()) {
+      return "La url de la imagen no debe estar vacía."
+    }
     if (!producto.price || producto.price <= 0) {
       return "El precio debe ser mayor a 0."
     }
     if (!producto.description.trim() || producto.description.length < 10) {
       return "La descripción debe tener al menos 10 caracteres."
-    }
-    if (!producto.imagen.trim()) {
-      return "La url de la imagen no debe estar vacía"
     }
     return true;
   }
@@ -63,14 +62,15 @@ function FormularioEdicion() {
     const validarForm = validarFormulario();
     
     if (validarForm === true) {
-      editarProducto(producto).then((prod) => {
-        alert("Producto editado correctamente!");
-        navigate(`/productos/${id}`); // Redirigir al detalle del producto
+      editarProducto(producto).then(async () => {
+        await dispararSweetBasico("¡Listo!", "El producto se ha editado correctamente", "success", "Cerrar");
+        navigate(`/productos/${id}`);
       }).catch((error) => {
-        alert("Hubo un problema al actualizar el producto: " + error.message);
+        console.error("Error:", error);
+        dispararSweetBasico("Opps...", "Hubo un problema al actualizar el producto: " + error.message, "error", "Cerrar");
       })
     } else {
-      alert("Error en la validación: " + validarForm);
+      dispararSweetBasico("Opps...", validarForm, "warning", "Cerrar");
     }
   };
 
@@ -89,7 +89,6 @@ function FormularioEdicion() {
             name="name"
             value={producto.name || ''}
             onChange={handleChange}
-            required
           />
         </div>
         <div>
@@ -99,7 +98,6 @@ function FormularioEdicion() {
             name="imagen" 
             value={producto.imagen || ''} 
             onChange={handleChange} 
-            required
           />
         </div>
         <div>
@@ -109,8 +107,6 @@ function FormularioEdicion() {
             name="price"
             value={producto.price || ''}
             onChange={handleChange}
-            required
-            min="0"
           />
         </div>
         <div>
@@ -119,7 +115,6 @@ function FormularioEdicion() {
             name="description"
             value={producto.description || ''}
             onChange={handleChange}
-            required
           />
         </div>
         <button type="submit">Actualizar Producto</button>

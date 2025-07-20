@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import CarritoCard from "./CarritoCard.jsx";
-import { Navigate } from "react-router-dom";
 import { CarritoContext } from "../contexts/CarritoContext.jsx";
+import { dispararSweetBasico, dispararSweetConfirmacion } from "../assets/SweetAlert.js";
 
 export default function Carrito() {
     const {productosCarrito, vaciarCarrito, borrarProductoCarrito} = useContext(CarritoContext);
@@ -13,12 +13,16 @@ export default function Carrito() {
 
     function funcionDisparadora(id){
         borrarProductoCarrito(id)
-        dispararSweetBasico("Producto Eliminado", "El producto fue agregado al carrito con éxito", "success", "Cerrar");
+        dispararSweetBasico("¡Eliminado!", "El producto se ha eliminado con éxito.", "success", "Cerrar")
     }
 
-    function funcionDisparadora2(){
-        vaciarCarrito()
-        dispararSweetBasico("Carrito Vaciado", "El producto fue agregado al carrito con éxito", "success", "Cerrar");
+    async function funcionDisparadora2(){
+        const result = await dispararSweetConfirmacion();
+
+        if (result.isConfirmed) {
+            vaciarCarrito()
+            dispararSweetBasico("¡Carrito Vaciado!", "El carrito se ha vaciado con éxito", "success", "Cerrar");
+        }
     }
 
     console.log("Total: " + total)

@@ -5,11 +5,12 @@ import App from './App.jsx'
 import { AuthProvider } from './contexts/AuthContext.jsx'
 import { CarritoProvider } from './contexts/CarritoContext.jsx'
 import { ProductosProvider } from './contexts/ProductosContext.jsx'
+import { ContactoProvider } from './contexts/ContactoContext.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Helmet } from 'react-helmet'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <ContactoProvider>
     <ProductosProvider>
     <AuthProvider>
     <CarritoProvider>
@@ -17,5 +18,6 @@ createRoot(document.getElementById('root')).render(
     </CarritoProvider>
     </AuthProvider>
     </ProductosProvider>
+    </ContactoProvider>
   </StrictMode>
 )

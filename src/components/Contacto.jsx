@@ -1,51 +1,94 @@
 import React, { useState } from "react";
+import { useContactoContext } from '../contexts/ContactoContext';
+import { dispararSweetBasico } from '../assets/SweetAlert';
 
-function Contacto () {
-    const [nombre, setNombre] = useState('');
-    const [usuario, setUsuario] = useState('');
-    const [mensaje, setMensaje] = useState('');
+function Contacto() {
+    const { enviarMensaje } = useContactoContext();
+    const [datosContacto, setDatosContacto] = useState({
+        nombre: '',
+        email: '',
+        mensaje: ''
+    });
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setDatosContacto({ ...datosContacto, [name]: value });
+    };
 
-    return(
+    const validarFormulario = () => {
+        if (!datosContacto.nombre.trim()) {
+            return "El nombre es obligatorio.";
+        }
+        if (!datosContacto.email.trim()) {
+            return "El email es obligatorio.";
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(datosContacto.email)) {
+            return "Por favor ingresa un email válido.";
+        }
+        if (!datosContacto.mensaje.trim() || datosContacto.mensaje.length < 10) {
+            return "El mensaje debe tener al menos 10 caracteres.";
+        }
+        return true;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const validarForm = validarFormulario();
+
+        if (validarForm === true) {
+            enviarMensaje(datosContacto).then((data) => {
+                setDatosContacto({ nombre: '', email: '', mensaje: '' });
+                dispararSweetBasico("¡Listo!", "Tu mensaje se ha enviado exitosamente", "success", "Cerrar");
+            }).catch((error) => {
+                console.error("Error:", error);
+                dispararSweetBasico("Opps...", "Hubo un problema al enviar el mensaje", "error", "Cerrar");
+            });
+        } else {
+            dispararSweetBasico("Opps...", validarForm, "warning", "Cerrar");
+        }
+    };
+
+    return (
         <section className="login">
-        <form>
-            <h2 className="titulo">Contacto</h2>
-            <div>
-            <br></br>
-            <label>Nombre:</label>
-            <input
-                placeholder="Pepe Peréz"
-                required
-                type="text"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                aria-label="Nombre"
-            />
-            </div>
-            <div>
-            <label>Email:</label>
-            <input
-                placeholder="ejemplo@gmail.com"
-                required
-                type="email"
-                value={usuario}
-                onChange={(e) => setUsuario(e.target.value)}
-                aria-label="Email"
-            />
-            </div>
-            <div>
-            <label>Mensaje:</label>
-            <textarea
-                placeholder="Tu mensaje"
-                required
-                rows="4"
-                type="text"
-                value={mensaje}
-                onChange={(e) => setMensaje(e.target.value)}
-                aria-label="Mensaje"
-            />
-            </div>
-            <button type="submit" aria-label="Enviar">Enviar</button>
-        </form>
+            <form onSubmit={handleSubmit}>
+                <h2 className="titulo">Contacto</h2>
+                <div>
+                    <br />
+                    <label>Nombre:</label>
+                    <input
+                        placeholder="Pepe Pérez"
+                        type="text"
+                        name="nombre"
+                        value={datosContacto.nombre}
+                        onChange={handleChange}
+                        aria-label="Nombre"
+                    />
+                </div>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        placeholder="ejemplo@gmail.com"
+                        type="text"
+                        name="email"
+                        value={datosContacto.email}
+                        onChange={handleChange}
+                        aria-label="Email"
+                    />
+                </div>
+                <div>
+                    <label>Mensaje:</label>
+                    <textarea
+                        placeholder="Tu mensaje"
+                        rows="4"
+                        name="mensaje"
+                        value={datosContacto.mensaje}
+                        onChange={handleChange}
+                        aria-label="Mensaje"
+                    />
+                </div>
+                <button type="submit" aria-label="Enviar">
+                    Enviar
+                </button>
+            </form>
         </section>
     );
 }

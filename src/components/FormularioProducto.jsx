@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useProductosContext } from '../contexts/ProductosContext';
+import { dispararSweetBasico } from '../assets/SweetAlert';
 
 function FormularioProducto() {
   const {agregarProducto} = useProductosContext();
@@ -14,35 +15,36 @@ function FormularioProducto() {
     setProducto({ ...producto, [name]: value });
   };
 
-  const [errores, setErrores] = useState({});
-
   const validarFormulario = () => {
-    const nuevosErrores = {};
     if (!producto.name.trim()) {
-      nuevosErrores.name = 'El nombre es obligatorio.';
+      return "El nombre es obligatorio."
     }
     if (!producto.imagen.trim()) {
-        nuevosErrores.imagen = 'La imagen es obligatoria.';
-      }
+      return "La url de la imagen no debe estar vacía."
+    }
     if (!producto.price || producto.price <= 0) {
-      nuevosErrores.price = 'El precio debe ser mayor a 0.';
+      return "El precio debe ser mayor a 0."
     }
     if (!producto.description.trim() || producto.description.length < 10) {
-      nuevosErrores.description = 'La descripción debe tener al menos 10 caracteres.';
+      return "La descripción debe tener al menos 10 caracteres."
     }
-    setErrores(nuevosErrores);
-    return Object.keys(nuevosErrores).length === 0;};
+    return true;
+  }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (validarFormulario()) {
+        const validarForm = validarFormulario();
+
+        if (validarForm === true)  {
             agregarProducto(producto).then((data) => {
                 setProducto({ name: '', price: '', description: '', imagen: ""});
+                dispararSweetBasico("¡Listo!", "El producto se ha creado exitosamente", "success", "Cerrar");
               }).catch((error) => {
-                alert('La descripción debe tener al menos 10 caracteres.')
+                console.error("Error:", error);
+                dispararSweetBasico("Opps...", "Hubo un problema al agregar el producto", "error", "Cerrar");
               })
             } else{
-                alert('La descripción debe tener al menos 10 caracteres.')
+              dispararSweetBasico("Opps...", validarForm, "warning", "Cerrar");                
             }
           }
 
@@ -53,17 +55,16 @@ function FormularioProducto() {
       <br></br>
       <label>Nombre:</label>
       <input
-        type="text" name="name" value={producto.name} onChange={handleChange} required/>
+        type="text" name="name" value={producto.name} onChange={handleChange}/>
     </div>
     <div>
       <label>Imagen (URL):</label>
       <input
-        type="text" name="imagen" value={producto.imagen} onChange={handleChange} required/>
+        type="text" name="imagen" value={producto.imagen} onChange={handleChange}/>
     </div>
     <div>
       <label>Precio:</label>
-      <input type="number" name="price" value={producto.price} onChange={handleChange} required
-        min="0"/>
+      <input type="number" name="price" value={producto.price} onChange={handleChange}/>
     </div>
     <div>
         <label>Descripción:</label>
@@ -71,7 +72,6 @@ function FormularioProducto() {
           name="description"
           value={producto.description}
           onChange={handleChange}
-          required
         />
       </div>
       <button type="submit">Agregar Producto</button>

@@ -1,7 +1,6 @@
 function CarritoCard({producto, funcionDisparadora}){
     
     function borrarDelCarrito() {
-        console.log("Paso 1")
         funcionDisparadora(producto.id)
     }
 
