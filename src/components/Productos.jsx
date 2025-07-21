@@ -77,7 +77,7 @@ function ProductosContainer(){
                 {admin ? <Link to="/admin/productos" class="producto-añadir-btn" aria-label="Añadir productos">Añadir Productos</Link> : null}
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 {productosActuales.map((producto) => (
-                    <div className="producto-card" >
+                    <div className="producto-card" key={producto.id}>
                     <Link to={"/productos/"+ producto.id}><img className="producto-image" src={producto.imagen}></img></Link>
                     <Link to={"/productos/" + producto.id} ><button className="producto-btn">Ver más</button></Link>
                     <h2 className="producto-titulo">{producto.name}</h2>

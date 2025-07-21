@@ -23,7 +23,6 @@ function ProductoDetalle({}) {
       if(error == "Hubo un error al obtener el producto."){
         setError("Hubo un error al obtener el producto.");
       }
-      setCargando(false);
     })
   }, [id]);
 
