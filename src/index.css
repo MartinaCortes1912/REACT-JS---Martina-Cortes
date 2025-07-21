@@ -53,6 +53,13 @@ footer{
   font-size: small;
 }
 
+/*INICIO*/
+.inicio{
+ margin: 5%;
+ justify-content: center;
+ align-content: center;
+}
+
 /*FORMULARIOS*/
 .titulo{
   font-size: 2rem;
@@ -296,7 +303,7 @@ footer{
 
 /*CARRITO*/
 .carrito-conteiner{
-  display: flex;
+  flex: auto;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
@@ -305,12 +312,15 @@ footer{
   color: #552626;
 }
 
+
 .carrito-titulos{
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  margin-top: 10%;
+  margin-bottom: 2%;
 }
 
 .carrito-titulo-producto{
@@ -318,6 +328,7 @@ footer{
 }
 
 .carrito-titulo-descripcion{
+  display: inline;
   width: 30%;
 }
 
@@ -331,6 +342,7 @@ footer{
   height: 25%;
   padding: 2%;
   color: #552626;
+  margin-bottom: 5%;
 }
 
 .carrito-producto{
@@ -340,6 +352,7 @@ footer{
 
 .descripcion-carrito{
   width: 30%;
+  display: inline;
 }
 
 .boton-carrito{
@@ -356,6 +369,7 @@ footer{
   border: none;
   color: white;
   font-weight: bold;
+  height: 4rem;
 }
 
 .carrito-vacio{
@@ -371,6 +385,7 @@ footer{
 .carrito-total{
   height: 30%;
   width: 100%;
+  margin-bottom: 10%;
 }
 
 
@@ -389,11 +404,18 @@ footer{
   .nav-icon {
     display: inline;
     font-size: 1.2rem;
-  }  
-
+  } 
+  
+  /*INICIO*/
+  .inicio img{
+    width: 90vw;
+    height: 60vh;
+    object-fit: cover;
+  }
+  
   /*LOGIN*/
   .login{
-    max-width: 80vw;
+    max-width: 90vw;
     min-height: 70vh;
     font-size: small;
   }
@@ -416,7 +438,7 @@ footer{
       flex-direction: column;
       justify-content: center;
       padding: 20px;
-      max-width: 80vw;
+      max-width: 90vw;
     }
   
     .detalle-imagen {
@@ -467,9 +489,44 @@ footer{
 
   /*NOSOTROS*/
   .nosotros{
-    max-width: 80vw;
+    max-width: 90vw;
     font-size: small;
     min-height: 70vh;
   }
+  
   /*CARRITO*/
+  .carrito-conteiner{
+    max-width: 90vw;
+    font-size: small;
+    min-height: 70vh;
+  }
+
+  .carrito-titulos{
+    height: 20%;
+  }
+
+  .carrito-titulos h2 {
+    font-size: medium;
+  }
+
+  .carrito-titulo-descripcion{
+    display: none;
+  }
+
+
+  .carrito-producto {
+    font-size: medium;
+  }
+
+  .descripcion-carrito{
+    display: none;
+  }
+
+  .boton-vaciar{
+    height: 5vh
+  }
+
+  .carrito-total{
+    font-size: medium;
+  }
 }
