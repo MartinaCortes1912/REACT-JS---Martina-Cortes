@@ -1,4 +1,4 @@
-import imagen from "../assets/inicio.jpg";
+import imagen from "../assets/Inicio.jpg";
 
 function Inicio() {  
     return (  
